@@ -397,10 +397,16 @@ fn numeric_compare(a: &String, b: &String) -> Ordering {
     let fb = permissive_f64_parse(b);
     // f64::cmp isn't implemented because NaN messes with it
     // but we sidestep that with permissive_f64_parse so just fake it
-    if fa > fb {
-        Ordering::Greater
-    } else if fa < fb {
+    if fa < fb {
         Ordering::Less
+    } else if fa > fb {
+        Ordering::Greater
+    } else if fa == fb {
+        Ordering::Equal
+    } else if fb == fb {
+        Ordering::Less
+    } else if fa == fa {
+        Ordering::Greater
     } else {
         Ordering::Equal
     }
